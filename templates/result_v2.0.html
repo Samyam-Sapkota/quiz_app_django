@@ -1,0 +1,164 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Answers Page</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{% static 'style/style.css' %}">
+  <style>
+    body {
+      background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%);
+      background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.2'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 20px 20px;
+      background-repeat: repeat;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-between">
+  <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mt-8">
+    <h1 class="text-2xl font-semibold text-center text-blue-600 mb-6">Quiz Answers!</h1>
+    <h1 class="text-2xl font-semibold text-center text-blue-600 mb-6">{{ greetings }} You guessed {{ score }} out of 10 Questions!</h1>
+    
+    {% for selected_questions, correct_ans, all_results in questions_results %}
+    <div class="mb-8">
+      <p class="text-lg font-semibold text-gray-700">{{ forloop.counter }}) {{ selected_questions.questions }}</p> 
+      <div class="mt-2 space-y-2">
+        <label class="flex items-center space-x-3">
+          {% if all_results == 'a' %}                                       
+            {% if correct_ans == 'a' %}   
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-circle-check fa-sm" style="color: #63E6BE;"></i>
+                {{ selected_questions.option_a }}
+              </div>
+            {% else %}
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-circle-xmark fa-sm" style="color: #fb4d09;"></i>
+                {{ selected_questions.option_a }}
+              </div>
+            {% endif %}
+          {% elif correct_ans == 'a' %}
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-circle-check fa-sm" style="color: #63E6BE;"></i>
+              {{ selected_questions.option_a }}
+            </div>
+          {% else %}
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <i class="fa-regular fa-circle" style="color: #8794ab;"></i>
+              {{ selected_questions.option_a }}
+            </div>
+          {% endif %}
+        </label>
+
+        <label class="flex items-center space-x-3">
+          {% if all_results == 'b' %} 
+            {% if correct_ans == 'b' %}   
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-circle-check fa-sm" style="color: #63E6BE;"></i>
+                {{ selected_questions.option_b }}
+              </div>
+            {% else %}
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-circle-xmark fa-sm" style="color: #fb4d09;"></i>
+                {{ selected_questions.option_b }}
+              </div>
+            {% endif %}
+          {% elif correct_ans == 'b' %}
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-circle-check fa-sm" style="color: #63E6BE;"></i>
+              {{ selected_questions.option_b }}
+            </div>
+          {% else %}
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <i class="fa-regular fa-circle" style="color: #8794ab;"></i>
+              {{ selected_questions.option_b }}
+            </div>
+          {% endif %}
+        </label>
+
+        <label class="flex items-center space-x-3">
+          {% if all_results == 'c' %} 
+            {% if correct_ans == 'c' %}   
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-circle-check fa-sm" style="color: #63E6BE;"></i>
+                {{ selected_questions.option_c }}
+              </div>
+            {% else %}
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-circle-xmark fa-sm" style="color: #fb4d09;"></i>
+                {{ selected_questions.option_c }}
+              </div>
+            {% endif %}
+          {% elif correct_ans == 'c' %}
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-circle-check fa-sm" style="color: #63E6BE;"></i>
+              {{ selected_questions.option_c }}
+            </div>
+          {% else %}
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <i class="fa-regular fa-circle" style="color: #8794ab;"></i>
+              {{ selected_questions.option_c }}
+            </div>
+          {% endif %}
+        </label>
+
+        <label class="flex items-center space-x-3">
+          {% if all_results == 'd' %} 
+            {% if correct_ans == 'd' %}   
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-circle-check fa-sm" style="color: #63E6BE;"></i>
+                {{ selected_questions.option_d }}
+              </div>
+            {% else %}
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-circle-xmark fa-sm" style="color: #fb4d09;"></i>
+                {{ selected_questions.option_d }}
+              </div>
+            {% endif %}
+          {% elif correct_ans == 'd' %}
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-circle-check fa-sm" style="color: #63E6BE;"></i>
+              {{ selected_questions.option_d }}
+            </div>
+          {% else %}
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <i class="fa-regular fa-circle" style="color: #8794ab;"></i>
+              {{ selected_questions.option_d }}
+            </div>
+          {% endif %}
+        </label>
+      </div>
+    </div>
+    {% endfor %}
+
+    <!-- Return to the home again to get new questions -->
+    <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition" onclick="window.location.href='{% url 'home' %}'">
+      Try Again
+    </button>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="bg-gray-800 text-white w-full py-4 mt-8">
+    <div class="container mx-auto text-center">
+      <p>© <span id="year"></span> Samyam Sapkota. All rights reserved.</p>
+      <p><span id="current-date"></span></p>
+    </div>
+  </footer>
+
+  <script>
+    // Update year and date in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+    function updateDate() {
+      const date = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('current-date').textContent = date.toLocaleDateString('en-US', options);
+    }
+    updateDate(); // Initial call
+    setInterval(updateDate, 1000 * 60 * 60 * 24); // Update daily
+  </script>
+</body>
+</html>

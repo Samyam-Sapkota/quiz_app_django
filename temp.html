@@ -1,0 +1,97 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Page</title>
+  <!-- Tailwind CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'style/style.css' %}">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+    <h1 class="text-2xl font-semibold text-center text-blue-600 mb-6">Quiz Time!</h1>
+<h1>{{ selected_questions.option_a }}</h1>
+    
+    <form action="{% url 'get_result_and_display' %}" method="POST">
+{% csrf_token %}
+{% for i in selected_questions %}
+  <div class="mb-8">
+    <p class="text-lg font-semibold text-gray-700">{{ forloop.counter }})  {{ i.questions }}</p> 
+      <div class="mt-2 space-y-2">
+        <label class="flex items-center space-x-3">
+          <input type="radio" name="question{{ forloop.counter }}_option" class="radio-toggle" value="a" />
+          <span class="text-gray-600">{{ i.option_a }}</span>
+        </label>
+        <label class="flex items-center space-x-3">
+          <input type="radio" name="question{{ forloop.counter }}_option" class="radio-toggle" value="b"/>
+          <span class="text-gray-600">{{ i.option_b }}</span>
+        </label>
+        <label class="flex items-center space-x-3">
+          <input type="radio" name="question{{ forloop.counter }}_option" class="radio-toggle" value="c"/>
+          <span class="text-gray-600">{{ i.option_c }}</span>
+        </label>
+        <label class="flex items-center space-x-3">
+          <input type="radio" name="question{{ forloop.counter }}_option" class="radio-toggle" value="d"/>
+          <span class="text-gray-600">{{ i.option_d }}</span>
+        </label>
+      </div>
+    
+    </div>
+{% endfor %}
+<!-- Submit Button -->
+<button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition" type="submit" onclick="check_form(event)">
+  Submit
+</button>
+</form>
+
+
+  </div>
+
+  <!-- Tailwind CSS Script -->
+  <script>
+    document.querySelectorAll('.radio-toggle').forEach((radio) => {
+      radio.addEventListener('change', function() {
+        document.querySelectorAll(`[name="${this.name}"]`).forEach((el) => {
+          el.parentNode.classList.remove('bg-green-100', 'text-green-700', 'font-semibold');
+        });
+        this.parentNode.classList.add('bg-green-100', 'text-green-700', 'font-semibold');
+      });
+    });
+  
+      // Check if all the questions are answered or not if not give the alert message
+
+      function check_form(event) {
+        // Prevent the form submission initially
+        event.preventDefault();
+
+        // Get all question groups
+        const questions = document.querySelectorAll('[name^="question"]');
+
+        let allAnswered = true;
+
+        // Check each question group
+        for (let i = 1; i <= {{ selected_questions|length }}; i++) {
+            // Check if at least one radio button is selected for this question
+            const group = document.querySelectorAll(`input[name="question${i}_option"]`);
+            const isChecked = Array.from(group).some(input => input.checked);
+
+            if (!isChecked) {
+                allAnswered = false;
+                // Optionally, you can highlight the question or show an error message
+                alert(`Please answer question ${i}.`);
+                break; // Exit the loop on first empty question
+            }
+        }
+
+        // If all questions are answered, submit the form
+        if (allAnswered) {
+            event.target.form.submit(); // Submit the form
+        }
+    }
+
+  </script>
+</body>
+</html>
