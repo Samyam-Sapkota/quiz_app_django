@@ -1,3 +1,5 @@
 env/
 password.txt
 temp.html
+venv/
+.env
